@@ -21,32 +21,30 @@ function Category() {
 
 	return (
 		<div className='bg-[#F4F4F4] py-5 '>
-			<div className='container flex items-center gap-10 mx-auto'>
+			<div className='container flex flex-col items-center gap-10 mx-auto lg:flex-row'>
 				<h2
 					className='px-5 py-2 text-2xl rounded-lg cursor-pointer text-orangeColor bg-mainColor'
 					onClick={() => setActive(!active)}>
 					Category
 				</h2>
 				<ul
-					className='grid w-full grid-cols-4 gap-5'
+					className='grid w-full grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4'
 					style={{ display: active ? 'grid' : 'none' }}>
 					{category &&
 						category.map((item, index) => {
 							return (
 								<li
 									key={index}
-									className='px-4 py-2 text-center rounded-lg'
+									className='px-4 py-2 mx-10 text-center rounded-lg md:mx-0'
 									style={{
 										background:
 											item === currentProduct ? '#003F62' : '#87BCD9',
 									}}>
 									<Link
 										onClick={() => {
-											dispatch(setCurrentProduct(item))
+											dispatch(setCurrentProduct(item));
 											setActive(false);
-										}
-
-									}
+										}}
 										className='text-[#fff] text-lg '
 										to='/product'>
 										{item}

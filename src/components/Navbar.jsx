@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 // images
 import logo from '../assets/logo.png';
@@ -8,22 +8,37 @@ import { BiUser } from 'react-icons/bi';
 import { BsHeart } from 'react-icons/bs';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setFilterProduct } from '../store/sliceProduct';
 function Navbar() {
 	const { total } = useSelector((state) => state.setFavorite);
 	const { totalProduct } = useSelector((state) => state.getCart);
+	let searchValue = useRef();
+	const dispatch = useDispatch();
+
+	function handleSearchValue() {
+		// if (searchValue.current.value.length > 0) {
+		dispatch(setFilterProduct(searchValue.current.value));
+		searchValue.current.value = '';
+		// }
+	}
 	return (
-		<div className='bg-mainColor h-[100px] w-full '>
-			<div className='container flex items-center justify-between h-full mx-auto'>
-				<div className='flex items-center gap-10'>
-					<img src={logo} alt='Logo' />
+		<div className='w-full h-full py-10 bg-mainColor '>
+			<div className='container flex flex-col items-center justify-between h-full gap-10 mx-auto lg:flex-row'>
+				<div className='flex flex-col items-center gap-10 md:flex-row'>
+					<Link to='/'>
+						<img src={logo} alt='Logo' />
+					</Link>
 					<div>
 						<input
+							ref={searchValue}
 							type='text'
 							placeholder='Search any things'
 							className='px-5 py-2 rounded-xl '
 						/>
-						<button className='px-5 py-2 text-[#fff] rounded-xl ml-[-20px] bg-orangeColor'>
+						<button
+							onClick={handleSearchValue}
+							className='px-5 py-2 text-[#fff] rounded-xl ml-[-20px] bg-orangeColor'>
 							Search
 						</button>
 					</div>
